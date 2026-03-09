@@ -4,280 +4,45 @@ import { useParams, Link } from 'react-router-dom'
 function BlogPost() {
   const { slug } = useParams()
 
-  // In production, you'd fetch from CMS or markdown files
-  // For now, hardcoded example
-  const post = {
-    id: 1,
-    slug: 'digital-wallpaper-etsy-guide-v2',
-    title: 'The Complete Guide to Selling Digital Wallpaper & Junk Journal Papers on Etsy (2026)',
-    excerpt: 'A comprehensive walkthrough with real seller income data, verified policy requirements, and actual shop performance metrics. No fluff—just credible, sourced information.',
-    date: 'March 9, 2026',
-    author: 'AI Insights Team',
-    readTime: '25 min read',
-    category: 'Passive Income',
-    tags: ['Digital Products', 'AI Design', 'Etsy', 'Passive Income', 'Case Studies'],
-    content: `
-      <p class="lead">The digital wallpaper and junk journal paper market on Etsy represents a <strong>legitimate but highly competitive opportunity</strong> for creators with AI tools and design skills. This guide walks you through the entire process—with <strong>real seller income data, verified policy requirements, and actual shop performance metrics</strong>.</p>
+  // Blog posts data
+  const posts = {
+    'digital-wallpaper-etsy-guide-v2': {
+      id: 1,
+      slug: 'digital-wallpaper-etsy-guide-v2',
+      title: 'The Complete Guide to Selling Digital Wallpaper & Junk Journal Papers on Etsy (2026)',
+      excerpt: 'A comprehensive walkthrough with real seller income data, verified policy requirements, and actual shop performance metrics. No fluff—just credible, sourced information.',
+      date: 'March 9, 2026',
+      author: 'AI Insights Team',
+      readTime: '25 min read',
+      category: 'Passive Income',
+      tags: ['Digital Products', 'AI Design', 'Etsy', 'Passive Income', 'Case Studies'],
+    },
+    'junk-journal-niche-research-march-2026': {
+      id: 2,
+      slug: 'junk-journal-niche-research-march-2026',
+      title: 'How I Found the 3 Best Junk Journal Niches for March 2026 (Step-by-Step Research Process)',
+      excerpt: 'A data-driven case study of systematic niche research using last30days, reddit-insights, and reddit-researcher tools. Discover the top 3 underserved niches with low competition and high demand.',
+      date: 'March 9, 2026',
+      author: 'Lord Elias',
+      readTime: '18 min read',
+      category: 'Market Research',
+      tags: ['Niche Research', 'Digital Products', 'Etsy', 'Market Analysis', 'Case Studies'],
+    },
+  }
 
-      <div class="bg-amber-50 border-l-4 border-amber-600 p-6 my-8">
-        <h3 class="text-xl font-bold text-amber-900 mb-3">⚠️ Reality Check</h3>
-        <p class="text-amber-800 mb-2">The market is saturated. Success requires 6-12 months of consistent work, not overnight riches. This guide is honest about what works and what doesn't.</p>
-      </div>
+  const post = posts[slug] || posts['digital-wallpaper-etsy-guide-v2']
 
-      <div class="bg-blue-50 border-l-4 border-blue-600 p-6 my-8">
-        <h3 class="text-xl font-bold text-blue-900 mb-3">💰 Real Income Benchmarks</h3>
-        <ul class="space-y-2 text-blue-800">
-          <li><strong>Typical part-time:</strong> $615-2,000/month (6-12 months)</li>
-          <li><strong>Successful niche shop:</strong> $2,000-5,000/month (12-18 months)</li>
-          <li><strong>Exceptional performers:</strong> $7,800+/month (18-24 months)</li>
-          <li><strong>Top 1% (Frankie Rivera):</strong> $32,000 in 6 months</li>
-        </ul>
-        <p class="text-blue-700 text-sm mt-3">Source: r/EtsySellers, r/PassiveIncome, verified case studies</p>
-      </div>
-
-      <div class="bg-green-50 border-l-4 border-green-600 p-6 my-8">
-        <h3 class="text-xl font-bold text-green-900 mb-3">✅ Real Income Report: Desiree Sandison</h3>
-        <p class="text-green-800 mb-2">"Made approximately $34,400 in a year from selling digital products. Bundling was the game-changer—went from $400/month to $2,300/month."</p>
-        <p class="text-green-700 text-sm">Source: r/PassiveIncome</p>
-      </div>
-
-      <h2>What Real Sellers Earn</h2>
-      <p>Let's cut through the hype and look at <strong>actual income reports</strong> from real sellers.</p>
-
-      <div class="bg-purple-50 border-l-4 border-purple-600 p-6 my-8">
-        <h4 class="font-bold text-purple-900 mb-2">💰 Case Study: Digital Download Art Seller</h4>
-        <p class="text-purple-800 mb-2">"650 sales since opening in September, with 57 sales in a single week."</p>
-        <ul class="text-purple-700 text-sm space-y-1">
-          <li><strong>Shop age:</strong> 6 months</li>
-          <li><strong>Total sales:</strong> 650</li>
-          <li><strong>Estimated revenue:</strong> ~$3,575 over 6 months = ~$596/month</li>
-        </ul>
-      </div>
-
-      <div class="bg-purple-50 border-l-4 border-purple-600 p-6 my-8">
-        <h4 class="font-bold text-purple-900 mb-2">💰 Case Study: Frankie Rivera (Exceptional)</h4>
-        <p class="text-purple-800 mb-2">"12,000 sales and $32,000 in revenue within just six months."</p>
-        <ul class="text-purple-700 text-sm space-y-1">
-          <li><strong>Monthly revenue:</strong> $5,333</li>
-          <li><strong>Average per sale:</strong> $2.67 (lower price point, high volume)</li>
-          <li><strong>Estimated profit:</strong> ~$14,000</li>
-        </ul>
-      </div>
-
-      <div class="bg-red-50 border-l-4 border-red-600 p-6 my-8">
-        <h3 class="text-xl font-bold text-red-900 mb-3">⚠️ Warning: Market Saturation</h3>
-        <p class="text-red-800 mb-2">Consensus from r/EtsySellers:</p>
-        <blockquote class="text-red-700 italic">"Making a substantial living solely from digital products is challenging, and many who claim success often do so by teaching others rather than through product sales alone."</blockquote>
-        <blockquote class="text-red-700 italic mt-2">"Very few people make a living solely from selling digital products, and the market has become highly competitive and saturated, especially since 2020."</blockquote>
-      </div>
-
-      <h2>June 2025 Policy Changes</h2>
-      <div class="bg-red-50 border-l-4 border-red-600 p-6 my-8">
-        <h3 class="text-xl font-bold text-red-900 mb-3">⚠️ CRITICAL: Policy Updates</h3>
-        <p class="text-red-800 mb-3">Etsy implemented major policy changes in June 2025 that affect all AI and digital sellers.</p>
-        
-        <h4 class="font-bold text-red-900 mt-4 mb-2">❌ Banned:</h4>
-        <ul class="list-disc pl-6 text-red-700 space-y-2">
-          <li><strong>Scanned vintage content</strong> - Previously permitted, now NO LONGER ALLOWED</li>
-          <li><strong>Purchased prompt bundles</strong> - You must use your own original prompts</li>
-        </ul>
-
-        <h4 class="font-bold text-red-900 mt-4 mb-2">✅ Required:</h4>
-        <ul class="list-disc pl-6 text-red-700 space-y-2">
-          <li><strong>Mandatory AI disclosure</strong> - Must disclose AI use in listing descriptions</li>
-          <li><strong>Category selection</strong> - Must use "Designed by" (not "Made by" or "Handmade")</li>
-          <li><strong>Meaningful creative input</strong> - Cannot just upload raw AI outputs</li>
-        </ul>
-
-        <p class="text-red-600 text-sm mt-4">Source: <a href="https://www.etsy.com/seller-handbook/article/22451909389" class="underline" target="_blank" rel="noopener">Etsy Seller Handbook</a></p>
-      </div>
-
-      <h2>AI Tools: Verified Pricing & Terms</h2>
-      
-      <h3>Midjourney ⭐ (Recommended)</h3>
-      <table class="w-full my-6">
-        <thead>
-          <tr class="bg-gray-100">
-            <th class="p-3 text-left">Plan</th>
-            <th class="p-3 text-left">Price</th>
-            <th class="p-3 text-left">Images</th>
-            <th class="p-3 text-left">Commercial</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="border-b">
-            <td class="p-3">Basic</td>
-            <td class="p-3">$10/mo</td>
-            <td class="p-3">~200/mo</td>
-            <td class="p-3 text-red-600">❌ NO</td>
-          </tr>
-          <tr class="border-b bg-blue-50">
-            <td class="p-3 font-semibold">Standard</td>
-            <td class="p-3">$30/mo</td>
-            <td class="p-3">~900/mo</td>
-            <td class="p-3 text-green-600">✅ YES</td>
-          </tr>
-          <tr class="border-b">
-            <td class="p-3">Pro</td>
-            <td class="p-3">$60/mo</td>
-            <td class="p-3">~1,800/mo</td>
-            <td class="p-3 text-green-600">✅ YES</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div class="bg-amber-50 border-l-4 border-amber-600 p-6 my-8">
-        <h4 class="font-bold text-amber-900 mb-2">⚠️ Critical Terms:</h4>
-        <ul class="list-disc pl-6 text-amber-800 space-y-2">
-          <li>Businesses with &gt;$1M revenue must use Pro or Mega plans</li>
-          <li>Images are publicly visible on Basic/Standard (no Stealth Mode)</li>
-          <li>EU requires disclosure labeling for AI-generated commercial content</li>
-          <li><strong>❌ Automation/botting violates ToS</strong></li>
-        </ul>
-        <p class="text-amber-700 text-sm mt-3">Source: <a href="https://docs.midjourney.com/hc/en-us/articles/32083055291277-Terms-of-Service" class="underline" target="_blank" rel="noopener">Midjourney ToS</a></p>
-      </div>
-
-      <h2>Case Study: 6 Top Shops Analyzed</h2>
-      
-      <div class="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-xl my-8">
-        <h3 class="text-xl font-bold text-blue-900 mb-4">🏆 bydigitalpaper (Top Performer)</h3>
-        <ul class="space-y-2 text-blue-800">
-          <li><strong>Total Sales:</strong> 66,184 (since 2012)</li>
-          <li><strong>Reviews:</strong> 9,600</li>
-          <li><strong>Rating:</strong> 4.9★</li>
-          <li><strong>Monthly Velocity:</strong> 500-800 sales/month</li>
-          <li><strong>Price Range:</strong> $3.00-$15.00 per item</li>
-        </ul>
-        <p class="text-blue-700 text-sm mt-3">Shop: <a href="https://www.etsy.com/shop/bydigitalpaper" class="underline" target="_blank" rel="noopener">etsy.com/shop/bydigitalpaper</a></p>
-      </div>
-
-      <div class="bg-gradient-to-br from-green-50 to-emerald-50 p-6 rounded-xl my-8">
-        <h3 class="text-xl font-bold text-green-900 mb-4">📦 MyPorchPrints (Volume Leader)</h3>
-        <ul class="space-y-2 text-green-800">
-          <li><strong>Total Sales:</strong> 474,762 (since 2016)</li>
-          <li><strong>Rating:</strong> 5.0★</li>
-          <li><strong>Monthly Velocity:</strong> 3,000-5,000 sales/month</li>
-          <li><strong>Price Range:</strong> $5.00-$25.00 per kit</li>
-          <li><strong>Key Strategy:</strong> Bundling (higher AOV)</li>
-        </ul>
-      </div>
-
-      <h2>Failure Post-Mortems</h2>
-      
-      <div class="bg-red-50 border-l-4 border-red-600 p-6 my-8">
-        <h4 class="font-bold text-red-900 mb-2">❌ Failure 1: Scanned Vintage (Shop Banned)</h4>
-        <p class="text-red-800 mb-2">"I lost my shop for selling scanned vintage—didn't know it was banned until it was too late."</p>
-        <ul class="text-red-700 text-sm space-y-1">
-          <li><strong>Timeline:</strong> Month 1-6 successful, Month 7 policy change, Month 8 suspended</li>
-          <li><strong>Consequence:</strong> Shop banned, funds held 180 days</li>
-          <li><strong>Lesson:</strong> Use AI to create vintage-style designs instead</li>
-        </ul>
-      </div>
-
-      <div class="bg-red-50 border-l-4 border-red-600 p-6 my-8">
-        <h4 class="font-bold text-red-900 mb-2">❌ Failure 2: Generic Products (No Sales)</h4>
-        <p class="text-red-800 mb-2">"Zero sales for first 3 months. My 'digital paper packs' were too generic."</p>
-        <ul class="text-red-700 text-sm space-y-1">
-          <li><strong>Mistake:</strong> Listed "Digital Paper Pack" (too generic)</li>
-          <li><strong>Fix:</strong> Niche down to "Vintage French Botanical for Junk Journals"</li>
-          <li><strong>Result:</strong> First sale in Month 5, 15 sales in Month 6</li>
-        </ul>
-      </div>
-
-      <h2>Legal Automation (No Midjourney Botting)</h2>
-      
-      <div class="bg-amber-50 border-l-4 border-amber-600 p-6 my-8">
-        <h3 class="text-xl font-bold text-amber-900 mb-3">⚠️ CRITICAL: Midjourney ToS</h3>
-        <p class="text-amber-800 mb-2">"Automated access to the Service, including bots, is prohibited."</p>
-        <p class="text-amber-700 text-sm">Consequences: Account termination, loss of all images, cannot create new account</p>
-      </div>
-
-      <div class="bg-green-50 border-l-4 border-green-600 p-6 my-8">
-        <h3 class="text-xl font-bold text-green-900 mb-3">✅ Legal Alternatives</h3>
-        <ul class="list-disc pl-6 text-green-800 space-y-2">
-          <li><strong>Stable Diffusion API</strong> - Fully compliant, $0.002-0.01/image</li>
-          <li><strong>DALL-E 3 API</strong> - Fully compliant, $0.04/image</li>
-          <li><strong>Adobe Firefly API</strong> - Included in your CC subscription</li>
-          <li><strong>Etsy API</strong> - Official API for listing automation</li>
-        </ul>
-      </div>
-
-      <h2>Tax Compliance (IRS 2025)</h2>
-      
-      <div class="bg-blue-50 border-l-4 border-blue-600 p-6 my-8">
-        <h3 class="text-xl font-bold text-blue-900 mb-3">📊 2025 Tax Requirements</h3>
-        <ul class="space-y-2 text-blue-800">
-          <li><strong>1099-K Threshold:</strong> $20,000 + 200 transactions (restored under OBBBA)</li>
-          <li><strong>Self-Employment Tax:</strong> 15.3% on net earnings ≥$400</li>
-          <li><strong>Quarterly Estimates:</strong> Required if owing ≥$1,000</li>
-          <li><strong>Important:</strong> All income must be reported regardless of 1099-K</li>
-        </ul>
-        <p class="text-blue-700 text-sm mt-3">Source: <a href="https://www.irs.gov/filing/digital-assets" class="underline" target="_blank" rel="noopener">IRS Digital Asset Reporting</a></p>
-      </div>
-
-      <h2>30-Day Launch Plan</h2>
-      <div class="my-8">
-        <div class="mb-6">
-          <h4 class="font-bold text-lg mb-2">Week 1: Foundation</h4>
-          <ul class="list-disc pl-6 space-y-1">
-            <li>Choose 2-3 niches (use Reddit insights)</li>
-            <li>Subscribe to Midjourney Standard ($30) or use Stable Diffusion (free)</li>
-            <li>Generate first 100 images (legal methods only)</li>
-            <li>Create 3 product packs (12 designs each)</li>
-          </ul>
+  if (!post) {
+    return (
+      <article className="max-w-4xl mx-auto py-12">
+        <div className="text-center">
+          <h1 className="text-3xl font-bold text-gray-900 mb-4">Post Not Found</h1>
+          <Link to="/blog-posts" className="text-blue-600 hover:text-blue-700">
+            ← Back to Blog
+          </Link>
         </div>
-        <div class="mb-6">
-          <h4 class="font-bold text-lg mb-2">Week 2: Shop Creation</h4>
-          <ul class="list-disc pl-6 space-y-1">
-            <li>Set up Etsy shop with AI disclosure prepared</li>
-            <li>Create listings with SEO (all 13 tags)</li>
-            <li>Design professional mockups</li>
-            <li>Price at $3.99-4.99 for launch (20% below average)</li>
-          </ul>
-        </div>
-        <div class="mb-6">
-          <h4 class="font-bold text-lg mb-2">Week 3: Launch</h4>
-          <ul class="list-disc pl-6 space-y-1">
-            <li>Announce on social media</li>
-            <li>Monitor analytics (views, favorites, conversion)</li>
-            <li>Optimize based on data</li>
-            <li>Respond to messages within 24 hours</li>
-          </ul>
-        </div>
-        <div>
-          <h4 class="font-bold text-lg mb-2">Week 4: Scale</h4>
-          <ul class="list-disc pl-6 space-y-1">
-            <li>Expand catalog to 25+ products</li>
-            <li>Create bundle listings (increase AOV)</li>
-            <li>Test Etsy ads ($1-2/day)</li>
-            <li>Plan Month 2 production</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-8 rounded-2xl my-8">
-        <h3 class="text-2xl font-bold mb-4">Ready to Start?</h3>
-        <p class="mb-6">The barrier to entry has never been lower, but neither has the competition. With your Adobe Premium subscription and programming skills, you have significant advantages over competitors.</p>
-        <p class="font-semibold">Success Formula: Quality AI + Strategic Niches + SEO + Consistency + Legal Automation = Passive Income</p>
-        <p class="text-sm mt-4 text-blue-100">Realistic Expectations: Months 1-3: $0-200/month | Months 4-6: $200-800/month | Months 7-12: $800-2,500/month</p>
-      </div>
-
-      <div class="bg-gray-50 border-l-4 border-gray-600 p-6 my-8">
-        <h3 class="text-xl font-bold text-gray-900 mb-3">🔗 Source Citations</h3>
-        <p class="text-gray-700 mb-3">All claims in this article are sourced to verifiable references:</p>
-        <ul class="list-disc pl-6 text-gray-700 space-y-2 text-sm">
-          <li><strong>Reddit Communities:</strong> r/EtsySellers, r/JunkJournaling, r/PassiveIncome</li>
-          <li><strong>AI Tool ToS:</strong> Midjourney, OpenAI, Stability AI official documentation</li>
-          <li><strong>Etsy Policies:</strong> Etsy Seller Handbook (June 2025 updates)</li>
-          <li><strong>IRS Guidelines:</strong> IRS.gov official publications</li>
-          <li><strong>Case Studies:</strong> YouTube interviews, Business Insider, verified seller reports</li>
-          <li><strong>Shop Data:</strong> Analysis of 20 top Etsy shops (public data)</li>
-        </ul>
-        <p class="text-gray-600 text-sm mt-4">Full citation list available in the downloadable guide.</p>
-      </div>
-
-      <p><em>Full 25-minute read with complete prompts, cost breakdowns, legal automation scripts, and working URLs available in the downloadable guide.</em></p>
-    `,
+      </article>
+    )
   }
 
   return (
@@ -313,11 +78,11 @@ function BlogPost() {
 
         <div className="flex items-center gap-4 mt-8 pt-8 border-t border-gray-200">
           <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-full flex items-center justify-center text-white font-bold">
-            AI
+            {post.author.charAt(0)}
           </div>
           <div>
             <div className="font-semibold text-gray-900">{post.author}</div>
-            <div className="text-sm text-gray-500">AI Insights Team</div>
+            <div className="text-sm text-gray-500">AI Insights</div>
           </div>
         </div>
       </header>
@@ -331,24 +96,71 @@ function BlogPost() {
         </div>
       </div>
 
-      {/* Content */}
-      <div 
-        className="prose prose-lg max-w-none
-          prose-headings:font-bold prose-headings:text-gray-900
-          prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-6
-          prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-4
-          prose-p:text-gray-700 prose-p:leading-relaxed prose-p:mb-6
-          prose-strong:text-gray-900
-          prose-a:text-blue-600 prose-a:hover:text-blue-700
-          prose-ul:my-6 prose-ul:list-disc prose-ul:pl-6
-          prose-li:mb-2
-          prose-pre:bg-gray-900 prose-pre:text-gray-100 prose-pre:rounded-lg prose-pre:p-4
-          prose-table:w-full prose-table:my-8
-          prose-th:bg-gray-100 prose-th:p-3 prose-th:text-left
-          prose-td:p-3 prose-td:border-b
-          prose-blockquote:border-l-4 prose-blockquote:border-blue-600 prose-blockquote:bg-blue-50 prose-blockquote:p-6 prose-blockquote:rounded-r-lg"
-        dangerouslySetInnerHTML={{ __html: post.content }}
-      />
+      {/* Content Placeholder - Will be loaded from markdown in production */}
+      <div className="prose prose-lg max-w-none">
+        <p className="text-gray-700 leading-relaxed mb-6">
+          <em>This article is available in full at the markdown source file. In production, content will be loaded from the CMS or markdown files.</em>
+        </p>
+        
+        <div className="bg-blue-50 border-l-4 border-blue-600 p-6 my-8">
+          <h3 className="text-xl font-bold text-blue-900 mb-3">📄 Read Full Article</h3>
+          <p className="text-blue-800 mb-3">
+            This blog post is stored as a markdown file in the content repository. The full {post.readTime} includes:
+          </p>
+          <ul className="space-y-2 text-blue-800">
+            <li>Complete research methodology breakdown</li>
+            <li>Tool-by-tool findings and analysis</li>
+            <li>Data tables with demand/competition scores</li>
+            <li>Top 3 niche picks with detailed justification</li>
+            <li>Specific product ideas and Firefly prompts</li>
+            <li>Pricing recommendations and action plan</li>
+          </ul>
+          <p className="text-blue-700 text-sm mt-3">
+            Source file: <code className="bg-blue-100 px-2 py-1 rounded">/src/content/blog/{post.slug}.md</code>
+          </p>
+        </div>
+
+        {slug === 'junk-journal-niche-research-march-2026' && (
+          <div className="bg-green-50 border-l-4 border-green-600 p-6 my-8">
+            <h3 className="text-xl font-bold text-green-900 mb-3">🎯 Quick Summary: Top 3 Niches</h3>
+            <div className="space-y-4 text-green-800">
+              <div className="bg-white p-4 rounded-lg shadow-sm">
+                <h4 className="font-bold text-green-900">#1: Grunge Academia / Deconstructed Dark Academia</h4>
+                <p className="text-sm mt-1">Demand: 8.5/10 | Competition: 4/10 | Opportunity: 9/10</p>
+                <p className="text-sm mt-2">Blends 2026 grunge trend + dark academia. Distressed textures, faded book pages, scientific diagrams. Raw artistic feel vs. pristine vintage.</p>
+              </div>
+              <div className="bg-white p-4 rounded-lg shadow-sm">
+                <h4 className="font-bold text-green-900">#2: Ethereal Liminal Spaces</h4>
+                <p className="text-sm mt-1">Demand: 7.5/10 | Competition: 3/10 | Opportunity: 9.5/10</p>
+                <p className="text-sm mt-2">Taps atmospheric photo album trend. Dreamy soft-focus scenes, muted palettes, mood-focused. Virtually untapped niche.</p>
+              </div>
+              <div className="bg-white p-4 rounded-lg shadow-sm">
+                <h4 className="font-bold text-green-900">#3: Naturalista Specimen Study</h4>
+                <p className="text-sm mt-1">Demand: 8/10 | Competition: 5/10 | Opportunity: 8.5/10</p>
+                <p className="text-sm mt-2">Cabinet of curiosities style. Pressed specimens, fungi, insects. Vintage scientific field guide aesthetic. Distinct from generic floral.</p>
+              </div>
+            </div>
+            <p className="text-green-700 text-sm mt-4">
+              <strong>Research Summary:</strong> <a href="/research/junk-journal-niche-analysis.md" className="underline hover:text-green-900" target="_blank" rel="noopener">
+                /research/junk-journal-niche-analysis.md
+              </a>
+            </p>
+          </div>
+        )}
+
+        {slug === 'digital-wallpaper-etsy-guide-v2' && (
+          <div className="bg-blue-50 border-l-4 border-blue-600 p-6 my-8">
+            <h3 className="text-xl font-bold text-blue-900 mb-3">💰 Real Income Benchmarks</h3>
+            <ul className="space-y-2 text-blue-800">
+              <li><strong>Typical part-time:</strong> $615-2,000/month (6-12 months)</li>
+              <li><strong>Successful niche shop:</strong> $2,000-5,000/month (12-18 months)</li>
+              <li><strong>Exceptional performers:</strong> $7,800+/month (18-24 months)</li>
+              <li><strong>Top 1% (Frankie Rivera):</strong> $32,000 in 6 months</li>
+            </ul>
+            <p className="text-blue-700 text-sm mt-3">Source: r/EtsySellers, r/PassiveIncome, verified case studies</p>
+          </div>
+        )}
+      </div>
 
       {/* Tags */}
       <div className="mt-12 pt-8 border-t border-gray-200">
@@ -393,11 +205,10 @@ function BlogPost() {
             </ul>
           </div>
           <div>
-            <h4 className="font-semibold text-gray-800 mb-3">IRS Tax Guidelines</h4>
+            <h4 className="font-semibold text-gray-800 mb-3">Research Files</h4>
             <ul className="space-y-2 text-sm text-gray-700">
-              <li><a href="https://www.irs.gov/filing/digital-assets" className="text-blue-600 hover:underline" target="_blank" rel="noopener">Digital Asset Reporting</a></li>
-              <li><a href="https://www.irs.gov/publications/p17" className="text-blue-600 hover:underline" target="_blank" rel="noopener">Publication 17</a></li>
-              <li><a href="https://turbotax.intuit.com/tax-tips/self-employment-taxes/selling-on-etsy-your-taxes/L27I196Wu" className="text-blue-600 hover:underline" target="_blank" rel="noopener">TurboTax Guide</a></li>
+              <li><a href="/research/junk-journal-niche-analysis.md" className="text-blue-600 hover:underline" target="_blank" rel="noopener">Junk Journal Niche Analysis</a></li>
+              <li><a href="/research/reddit-insights.md" className="text-blue-600 hover:underline" target="_blank" rel="noopener">Reddit Insights Document</a></li>
             </ul>
           </div>
         </div>
