@@ -12,6 +12,7 @@ function Home() {
             AI Insights
           </span>
         </h1>
+        <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-indigo-600 mx-auto mb-6 rounded-full"></div>
         <p className="text-xl text-gray-600 mb-10 max-w-3xl mx-auto">
           Your hub for AI discoveries, programming tutorials, plugins, and agent skills.
           Explore the latest in artificial intelligence and automation.
