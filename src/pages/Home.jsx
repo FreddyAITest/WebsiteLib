@@ -6,9 +6,9 @@ function Home() {
     <div className="space-y-12">
       {/* Hero Section */}
       <section className="text-center py-16">
-        <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-          Welcome to
-          <span className="block bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+        <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-snug">
+          <span className="block mb-2">Welcome to</span>
+          <span className="block bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent leading-none py-2">
             AI Insights
           </span>
         </h1>
