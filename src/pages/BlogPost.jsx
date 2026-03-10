@@ -3,38 +3,14 @@ import { useParams, Link } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { blogPosts } from '../content/blog-posts-config'
-
-// Dynamic import function for markdown files
-// Vite requires explicit paths for dynamic imports - list all possible files
-const importMarkdown = async (slug) => {
-  try {
-    let module;
-    switch (slug) {
-      case 'digital-wallpaper-etsy-guide-v2':
-        module = await import('../content/blog/digital-wallpaper-etsy-guide-v2.md?raw');
-        break;
-      case 'openclaw-cronjobs-automation-guide':
-        module = await import('../content/blog/openclaw-cronjobs-automation-guide.md?raw');
-        break;
-      case 'openclaw-setup-guide-skills-subagents-plugins':
-        module = await import('../content/blog/openclaw-setup-guide-skills-subagents-plugins.md?raw');
-        break;
-      case 'junk-journal-niche-research-march-2026':
-        return '# Article Coming Soon\n\nThis article is being prepared and will be published shortly.';
-      default:
-        throw new Error(`Unknown slug: ${slug}`);
-    }
-    return module.default;
-  } catch (error) {
-    console.error(`Failed to load markdown for ${slug}:`, error)
-    return '# Content Not Found\n\nThis article could not be loaded. Please check the URL or try again later.'
-  }
-}
+import digitalWallpaperGuide from '../content/blog/digital-wallpaper-etsy-guide-v2.md?raw'
+import openclawCronjobsGuide from '../content/blog/openclaw-cronjobs-automation-guide.md?raw'
+import openclawSetupGuide from '../content/blog/openclaw-setup-guide-skills-subagents-plugins.md?raw'
 
 function BlogPost() {
   const { slug } = useParams()
   const [content, setContent] = useState('')
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
 
   // Convert blogPosts array to lookup object
   const posts = {}
@@ -57,20 +33,20 @@ function BlogPost() {
 
   const post = posts[slug] || posts['digital-wallpaper-etsy-guide-v2']
 
-  // Load content based on slug (dynamic import for code-splitting)
+  // Load content based on slug (static imports - reliable)
   useEffect(() => {
-    setLoading(true)
-    const loadContent = async () => {
-      if (slug === 'junk-journal-niche-research-march-2026') {
-        setContent('# Article Coming Soon\n\nThis article is being prepared and will be published shortly.')
-        setLoading(false)
-      } else {
-        const markdown = await importMarkdown(slug)
-        setContent(markdown)
-        setLoading(false)
-      }
+    if (slug === 'digital-wallpaper-etsy-guide-v2') {
+      setContent(digitalWallpaperGuide)
+    } else if (slug === 'openclaw-cronjobs-automation-guide') {
+      setContent(openclawCronjobsGuide)
+    } else if (slug === 'openclaw-setup-guide-skills-subagents-plugins') {
+      setContent(openclawSetupGuide)
+    } else if (slug === 'junk-journal-niche-research-march-2026') {
+      setContent('# Article Coming Soon\n\nThis article is being prepared and will be published shortly.')
+    } else {
+      setContent('# Not Found\n\nThis blog post could not be found.')
     }
-    loadContent()
+    setLoading(false)
   }, [slug])
 
   if (!post) {
