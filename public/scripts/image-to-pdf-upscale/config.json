@@ -1,0 +1,41 @@
+{
+  "input_folder": "./input",
+  "output_folder": "./output",
+  "temp_folder": "./temp",
+  
+  "photoshop_enabled": false,
+  "photoshop_path": "C:\\Program Files\\Adobe\\Adobe Photoshop 2024\\Photoshop.exe",
+  
+  "ai_upscale_enabled": true,
+  "ai_model": "realesrgan",
+  
+  "pdf_max_size_mb": 20,
+  "pdf_page_size": "A4",
+  "pdf_quality": 300,
+  
+  "upload_enabled": false,
+  "upload_method": "netlify",
+  
+  "netlify_token": "YOUR_NETLIFY_TOKEN",
+  "netlify_site_id": "YOUR_SITE_ID",
+  
+  "s3_bucket": "your-bucket-name",
+  "s3_region": "us-east-1",
+  "s3_access_key": "YOUR_AWS_ACCESS_KEY",
+  "s3_secret_key": "YOUR_AWS_SECRET_KEY",
+  
+  "ftp_host": "ftp.example.com",
+  "ftp_user": "username",
+  "ftp_password": "password",
+  "ftp_port": 21,
+  
+  "sftp_host": "sftp.example.com",
+  "sftp_user": "username",
+  "sftp_password": "password",
+  "sftp_port": 22,
+  "sftp_key_file": "",
+  
+  "max_workers": 4,
+  "resume_enabled": true,
+  "supported_formats": [".jpg", ".jpeg", ".png", ".tiff", ".tif", ".webp"]
+}

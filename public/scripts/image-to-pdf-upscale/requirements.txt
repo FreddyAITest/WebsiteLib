@@ -1,0 +1,32 @@
+# Core image processing
+Pillow>=10.0.0
+img2pdf>=0.5.0
+reportlab>=4.0.0
+
+# PDF manipulation
+pypdf>=3.0.0
+
+# Photoshop automation (Windows only)
+photoshop-python-api>=1.0.0; sys_platform == 'win32'
+
+# AI upscaling (optional, requires GPU for best performance)
+# realesrgan>=0.3.0
+# basicsr>=1.4.2
+# torch>=2.0.0
+# torchvision>=0.15.0
+# waifu2x>=1.1.1
+
+# Progress bars
+tqdm>=4.65.0
+
+# Upload methods
+boto3>=1.28.0; extra == 's3'
+paramiko>=3.3.0; extra == 'sftp'
+requests>=2.31.0
+
+# Configuration
+# (json is standard library)
+
+# Optional: For better image format support
+# pillow-heif>=0.13.0  # HEIC/HEIF support
+# pillow-avif-plugin>=1.4.0  # AVIF support

@@ -29,6 +29,12 @@ function Home() {
             Read Blog Posts
           </Link>
           <Link
+            to="/scripts"
+            className="bg-indigo-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-indigo-700 transition shadow-lg hover:shadow-xl"
+          >
+            Download Scripts
+          </Link>
+          <Link
             to="/skills"
             className="bg-white text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-gray-50 transition shadow-md border border-blue-200"
           >
