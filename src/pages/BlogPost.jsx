@@ -4,46 +4,29 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import digitalWallpaperGuide from '../content/blog/digital-wallpaper-etsy-guide-v2.md?raw'
 import openclawCronjobsGuide from '../content/blog/openclaw-cronjobs-automation-guide.md?raw'
+import { blogPosts } from '../content/blog-posts-config'
 
 function BlogPost() {
   const { slug } = useParams()
   const [content, setContent] = useState('')
 
-  // Blog posts metadata
-  const posts = {
-    'digital-wallpaper-etsy-guide-v2': {
-      id: 1,
-      slug: 'digital-wallpaper-etsy-guide-v2',
-      title: 'The Complete Guide to Selling Digital Wallpaper & Junk Journal Papers on Etsy (2026)',
-      excerpt: 'A comprehensive walkthrough with real seller income data, verified policy requirements, and actual shop performance metrics. No fluff—just credible, sourced information.',
-      date: 'March 9, 2026',
-      author: 'AI Insights Team',
-      readTime: '25 min read',
-      category: 'Passive Income',
-      tags: ['Digital Products', 'AI Design', 'Etsy', 'Passive Income', 'Case Studies'],
-    },
-    'openclaw-cronjobs-automation-guide': {
-      id: 2,
-      slug: 'openclaw-cronjobs-automation-guide',
-      title: 'Automate Everything: How to Schedule AI Tasks with OpenClaw Cronjobs (2026 Guide)',
-      excerpt: 'Master AI automation with OpenClaw cronjobs. Step-by-step guide to scheduling reports, monitoring, data collection, and content generation with 20+ working code examples.',
-      date: 'March 10, 2026',
-      author: 'AI Insights Team',
-      readTime: '18 min read',
-      category: 'AI Automation',
-      tags: ['OpenClaw', 'Automation', 'Cronjobs', 'AI', 'Scheduling', 'Tutorial'],
-    },
-    'junk-journal-niche-research-march-2026': {
-      id: 3,
-      slug: 'junk-journal-niche-research-march-2026',
-      title: 'How I Found the 3 Best Junk Journal Niches for March 2026 (Step-by-Step Research Process)',
-      excerpt: 'A data-driven case study of systematic niche research using last30days, reddit-insights, and reddit-researcher tools. Discover the top 3 underserved niches with low competition and high demand.',
-      date: 'March 9, 2026',
-      author: 'Lord Elias',
-      readTime: '18 min read',
-      category: 'Market Research',
-      tags: ['Niche Research', 'Digital Products', 'Etsy', 'Market Analysis', 'Case Studies'],
-    },
+  // Convert blogPosts array to lookup object
+  const posts = {}
+  blogPosts.forEach(post => {
+    posts[post.slug] = post
+  })
+
+  // Add future posts here (content loaded dynamically)
+  posts['junk-journal-niche-research-march-2026'] = {
+    id: 3,
+    slug: 'junk-journal-niche-research-march-2026',
+    title: 'How I Found the 3 Best Junk Journal Niches for March 2026 (Step-by-Step Research Process)',
+    excerpt: 'A data-driven case study of systematic niche research using last30days, reddit-insights, and reddit-researcher tools. Discover the top 3 underserved niches with low competition and high demand.',
+    date: 'March 9, 2026',
+    author: 'Lord Elias',
+    readTime: '18 min read',
+    category: 'Market Research',
+    tags: ['Niche Research', 'Digital Products', 'Etsy', 'Market Analysis', 'Case Studies'],
   }
 
   const post = posts[slug] || posts['digital-wallpaper-etsy-guide-v2']
