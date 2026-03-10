@@ -3,230 +3,183 @@ import { useParams, Link } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { blogPosts } from '../content/blog-posts-config'
-import digitalWallpaperGuide from '../content/blog/digital-wallpaper-etsy-guide-v2.md?raw'
-import openclawCronjobsGuide from '../content/blog/openclaw-cronjobs-automation-guide.md?raw'
-import openclawSetupGuide from '../content/blog/openclaw-setup-guide-skills-subagents-plugins.md?raw'
 
 function BlogPost() {
   const { slug } = useParams()
   const [content, setContent] = useState('')
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
-  // Convert blogPosts array to lookup object
+  // Get post metadata
   const posts = {}
   blogPosts.forEach(post => {
     posts[post.slug] = post
   })
-
-  // Add future posts here (content loaded dynamically)
-  posts['junk-journal-niche-research-march-2026'] = {
-    id: 3,
-    slug: 'junk-journal-niche-research-march-2026',
-    title: 'How I Found the 3 Best Junk Journal Niches for March 2026 (Step-by-Step Research Process)',
-    excerpt: 'A data-driven case study of systematic niche research using last30days, reddit-insights, and reddit-researcher tools. Discover the top 3 underserved niches with low competition and high demand.',
-    date: 'March 9, 2026',
-    author: 'Lord Elias',
-    readTime: '18 min read',
-    category: 'Market Research',
-    tags: ['Niche Research', 'Digital Products', 'Etsy', 'Market Analysis', 'Case Studies'],
-  }
-
   const post = posts[slug] || posts['digital-wallpaper-etsy-guide-v2']
 
-  // Load content based on slug (static imports - reliable)
+  // Fetch markdown content dynamically
   useEffect(() => {
-    if (slug === 'digital-wallpaper-etsy-guide-v2') {
-      setContent(digitalWallpaperGuide)
-    } else if (slug === 'openclaw-cronjobs-automation-guide') {
-      setContent(openclawCronjobsGuide)
-    } else if (slug === 'openclaw-setup-guide-skills-subagents-plugins') {
-      setContent(openclawSetupGuide)
-    } else if (slug === 'junk-journal-niche-research-march-2026') {
-      setContent('# Article Coming Soon\n\nThis article is being prepared and will be published shortly.')
-    } else {
-      setContent('# Not Found\n\nThis blog post could not be found.')
+    setLoading(true)
+    setError(null)
+    
+    const fetchContent = async () => {
+      try {
+        const response = await fetch(`/src/content/blog/${slug}.md`)
+        if (!response.ok) {
+          throw new Error(`Failed to load ${slug}`)
+        }
+        const text = await response.text()
+        setContent(text)
+      } catch (err) {
+        console.error('Error loading blog post:', err)
+        setError(err.message)
+        setContent('# Error\n\nCould not load blog post content.')
+      } finally {
+        setLoading(false)
+      }
     }
-    setLoading(false)
+
+    if (slug && slug !== 'junk-journal-niche-research-march-2026') {
+      fetchContent()
+    } else {
+      setContent('# Article Coming Soon\n\nThis article is being prepared and will be published shortly.')
+      setLoading(false)
+    }
   }, [slug])
 
-  if (!post) {
-    return (
-      <article className="max-w-4xl mx-auto py-12">
-        <div className="text-center">
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">Post Not Found</h1>
-          <Link to="/blog-posts" className="text-blue-600 hover:text-blue-700">
-            ← Back to Blog
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
+      {/* Navigation */}
+      <nav className="bg-white/90 backdrop-blur-md shadow-md sticky top-0 z-50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <Link to="/" className="flex items-center space-x-2">
+              <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-lg">AI</span>
+              </div>
+              <span className="text-lg font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">AI Insights</span>
+            </Link>
+            <div className="flex space-x-1">
+              <Link to="/" className="px-3 py-2 rounded-lg font-medium text-gray-600 hover:bg-gray-100 transition">Home</Link>
+              <Link to="/blog-posts" className="px-3 py-2 rounded-lg font-medium text-gray-600 hover:bg-gray-100 transition">Blog Posts</Link>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      {/* Article Content */}
+      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Header */}
+        <header className="mb-12">
+          <div className="flex items-center gap-3 mb-6">
+            <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">
+              {post.category}
+            </span>
+            <span className="text-gray-500 text-sm">{post.date}</span>
+            <span className="text-gray-500 text-sm">• {post.readTime}</span>
+          </div>
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+            {post.title}
+          </h1>
+          <div className="flex items-center gap-4 text-gray-600">
+            <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center">
+              <span className="text-white font-bold">{post.author?.charAt(0) || 'A'}</span>
+            </div>
+            <div>
+              <p className="font-medium text-gray-900">{post.author || 'AI Insights Team'}</p>
+              <p className="text-sm text-gray-500">Author</p>
+            </div>
+          </div>
+        </header>
+
+        {/* Content */}
+        <div className="bg-white rounded-2xl shadow-lg p-8 md:p-12 border border-gray-100">
+          {loading ? (
+            <div className="text-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+              <p className="text-gray-600">Loading article...</p>
+            </div>
+          ) : error ? (
+            <div className="bg-red-50 border-l-4 border-red-600 p-6">
+              <h3 className="text-lg font-bold text-red-900 mb-2">Error Loading Content</h3>
+              <p className="text-red-800">{error}</p>
+            </div>
+          ) : (
+            <div className="prose prose-lg prose-blue max-w-none">
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                components={{
+                  h1: ({node, ...props}) => <h1 className="text-3xl font-bold text-gray-900 mt-12 mb-6" {...props} />,
+                  h2: ({node, ...props}) => <h2 className="text-2xl font-bold text-gray-900 mt-10 mb-4" {...props} />,
+                  h3: ({node, ...props}) => <h3 className="text-xl font-bold text-gray-900 mt-8 mb-3" {...props} />,
+                  h4: ({node, ...props}) => <h4 className="text-lg font-semibold text-gray-900 mt-6 mb-2" {...props} />,
+                  p: ({node, ...props}) => <p className="text-gray-700 leading-relaxed mb-4" {...props} />,
+                  ul: ({node, ...props}) => <ul className="list-disc list-inside space-y-2 mb-4 ml-4" {...props} />,
+                  ol: ({node, ...props}) => <ol className="list-decimal list-inside space-y-2 mb-4 ml-4" {...props} />,
+                  li: ({node, ...props}) => <li className="text-gray-700" {...props} />,
+                  blockquote: ({node, ...props}) => (
+                    <blockquote className="border-l-4 border-blue-600 pl-4 py-2 my-6 bg-blue-50 italic text-gray-700" {...props} />
+                  ),
+                  code: ({node, inline, ...props}) => (
+                    inline
+                      ? <code className="bg-gray-100 px-2 py-1 rounded text-sm font-mono text-red-600" {...props} />
+                      : <code className="block bg-gray-900 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto font-mono text-sm" {...props} />
+                  ),
+                  pre: ({node, ...props}) => <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto" {...props} />,
+                  table: ({node, ...props}) => <div className="overflow-x-auto my-6"><table className="min-w-full border-collapse border border-gray-300" {...props} /></div>,
+                  th: ({node, ...props}) => <th className="border border-gray-300 bg-gray-100 px-4 py-2 font-semibold text-left" {...props} />,
+                  td: ({node, ...props}) => <td className="border border-gray-300 px-4 py-2" {...props} />,
+                  hr: ({node, ...props}) => <hr className="my-8 border-gray-300" {...props} />,
+                  a: ({node, ...props}) => <a className="text-blue-600 hover:underline font-medium" target="_blank" rel="noopener noreferrer" {...props} />,
+                  strong: ({node, ...props}) => <strong className="font-bold text-gray-900" {...props} />,
+                  em: ({node, ...props}) => <em className="italic text-gray-700" {...props} />,
+                }}
+              >
+                {content}
+              </ReactMarkdown>
+            </div>
+          )}
+        </div>
+
+        {/* Back link */}
+        <div className="mt-12">
+          <Link to="/blog-posts" className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium">
+            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Back to all posts
           </Link>
         </div>
       </article>
-    )
-  }
 
-  return (
-    <article className="max-w-4xl mx-auto py-12">
-      {/* Header */}
-      <header className="mb-12">
-        <Link
-          to="/blog-posts"
-          className="inline-flex items-center text-blue-600 hover:text-blue-700 mb-6 font-medium"
-        >
-          <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
-          Back to Blog
-        </Link>
-
-        <div className="flex items-center gap-3 mb-6">
-          <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">
-            {post.category}
-          </span>
-          <span className="text-gray-500 text-sm">{post.date}</span>
-          <span className="text-gray-500 text-sm">•</span>
-          <span className="text-gray-500 text-sm">{post.readTime}</span>
-        </div>
-
-        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
-          {post.title}
-        </h1>
-
-        <p className="text-xl text-gray-600 leading-relaxed">
-          {post.excerpt}
-        </p>
-
-        <div className="flex items-center gap-4 mt-8 pt-8 border-t border-gray-200">
-          <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-full flex items-center justify-center text-white font-bold">
-            {post.author.charAt(0)}
+      {/* Footer */}
+      <footer className="bg-gray-900 text-white py-12 mt-20">
+        <div className="max-w-4xl mx-auto px-4">
+          <div className="grid md:grid-cols-3 gap-8">
+            <div>
+              <h3 className="text-xl font-bold mb-4">AI Insights</h3>
+              <p className="text-gray-400">Exploring the frontier of AI, programming, and intelligent automation.</p>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-4">Quick Links</h4>
+              <ul className="space-y-2 text-gray-400">
+                <li><Link to="/blog-posts" className="hover:text-white transition">Blog Posts</Link></li>
+                <li><Link to="/programming-stuff" className="hover:text-white transition">Programming Stuff</Link></li>
+                <li><Link to="/plugins" className="hover:text-white transition">Plugins</Link></li>
+                <li><Link to="/skills" className="hover:text-white transition">Skills</Link></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-4">Connect</h4>
+              <p className="text-gray-400">Built with React, Tailwind CSS, and powered by AI insights.</p>
+            </div>
           </div>
-          <div>
-            <div className="font-semibold text-gray-900">{post.author}</div>
-            <div className="text-sm text-gray-500">AI Insights</div>
+          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+            <p>© 2026 AI Insights. All rights reserved.</p>
           </div>
         </div>
-      </header>
-
-      {/* Featured Image */}
-      <div className="mb-12 rounded-2xl overflow-hidden shadow-xl">
-        <div className="aspect-video bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
-          <svg className="w-32 h-32 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
-          </svg>
-        </div>
-      </div>
-
-      {/* Full Article Content */}
-      <div className="prose prose-lg prose-blue max-w-none">
-        {loading ? (
-          <div className="text-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-            <p className="text-gray-600">Loading article...</p>
-          </div>
-        ) : (
-          <ReactMarkdown
-            remarkPlugins={[remarkGfm]}
-            components={{
-              h1: ({node, ...props}) => <h1 className="text-3xl font-bold text-gray-900 mt-12 mb-6" {...props} />,
-              h2: ({node, ...props}) => <h2 className="text-2xl font-bold text-gray-900 mt-10 mb-4" {...props} />,
-              h3: ({node, ...props}) => <h3 className="text-xl font-bold text-gray-900 mt-8 mb-3" {...props} />,
-              h4: ({node, ...props}) => <h4 className="text-lg font-semibold text-gray-900 mt-6 mb-2" {...props} />,
-              p: ({node, ...props}) => <p className="text-gray-700 leading-relaxed mb-4" {...props} />,
-              ul: ({node, ...props}) => <ul className="list-disc list-inside space-y-2 mb-4 ml-4" {...props} />,
-              ol: ({node, ...props}) => <ol className="list-decimal list-inside space-y-2 mb-4 ml-4" {...props} />,
-              li: ({node, ...props}) => <li className="text-gray-700" {...props} />,
-              blockquote: ({node, ...props}) => (
-                <blockquote className="border-l-4 border-blue-600 pl-4 py-2 my-6 bg-blue-50 italic text-gray-700" {...props} />
-              ),
-              code: ({node, inline, ...props}) => (
-                inline
-                  ? <code className="bg-gray-100 px-2 py-1 rounded text-sm font-mono text-red-600" {...props} />
-                  : <code className="block bg-gray-900 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto font-mono text-sm" {...props} />
-              ),
-              pre: ({node, ...props}) => <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto" {...props} />,
-              table: ({node, ...props}) => <div className="overflow-x-auto my-6"><table className="min-w-full border-collapse border border-gray-300" {...props} /></div>,
-              th: ({node, ...props}) => <th className="border border-gray-300 bg-gray-100 px-4 py-2 font-semibold text-left" {...props} />,
-              td: ({node, ...props}) => <td className="border border-gray-300 px-4 py-2" {...props} />,
-              hr: ({node, ...props}) => <hr className="my-8 border-gray-300" {...props} />,
-              a: ({node, ...props}) => <a className="text-blue-600 hover:underline font-medium" target="_blank" rel="noopener noreferrer" {...props} />,
-              strong: ({node, ...props}) => <strong className="font-bold text-gray-900" {...props} />,
-              em: ({node, ...props}) => <em className="italic text-gray-700" {...props} />,
-            }}
-          >
-            {content}
-          </ReactMarkdown>
-        )}
-      </div>
-
-      {/* Tags */}
-      <div className="mt-12 pt-8 border-t border-gray-200">
-        <div className="flex flex-wrap gap-2">
-          {post.tags.map((tag, index) => (
-            <span
-              key={index}
-              className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm hover:bg-gray-200 transition cursor-pointer"
-            >
-              #{tag}
-            </span>
-          ))}
-        </div>
-      </div>
-
-      {/* Source Citations Section */}
-      <div className="mt-12 bg-gray-50 rounded-2xl p-8">
-        <h3 className="text-2xl font-bold text-gray-900 mb-6">📚 Full Source Citations</h3>
-        <div className="grid md:grid-cols-2 gap-6">
-          <div>
-            <h4 className="font-semibold text-gray-800 mb-3">Reddit Communities</h4>
-            <ul className="space-y-2 text-sm text-gray-700">
-              <li><a href="https://www.reddit.com/r/EtsySellers/" className="text-blue-600 hover:underline" target="_blank" rel="noopener">r/EtsySellers</a></li>
-              <li><a href="https://www.reddit.com/r/JunkJournals/" className="text-blue-600 hover:underline" target="_blank" rel="noopener">r/JunkJournaling</a></li>
-              <li><a href="https://www.reddit.com/r/passive_income/" className="text-blue-600 hover:underline" target="_blank" rel="noopener">r/PassiveIncome</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold text-gray-800 mb-3">AI Tool Documentation</h4>
-            <ul className="space-y-2 text-sm text-gray-700">
-              <li><a href="https://docs.midjourney.com/hc/en-us/articles/32083055291277-Terms-of-Service" className="text-blue-600 hover:underline" target="_blank" rel="noopener">Midjourney ToS</a></li>
-              <li><a href="https://openai.com/api/pricing/" className="text-blue-600 hover:underline" target="_blank" rel="noopener">OpenAI Pricing</a></li>
-              <li><a href="https://stability.ai/license" className="text-blue-600 hover:underline" target="_blank" rel="noopener">Stability AI License</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold text-gray-800 mb-3">Etsy Policies</h4>
-            <ul className="space-y-2 text-sm text-gray-700">
-              <li><a href="https://www.etsy.com/seller-handbook/article/22451909389" className="text-blue-600 hover:underline" target="_blank" rel="noopener">Creativity Standards June 2025</a></li>
-              <li><a href="https://www.etsy.com/legal/ip/" className="text-blue-600 hover:underline" target="_blank" rel="noopener">IP Policy</a></li>
-              <li><a href="https://help.etsy.com/hc/en-us/articles/360000336447" className="text-blue-600 hover:underline" target="_blank" rel="noopener">1099-K Guide</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold text-gray-800 mb-3">Research Files</h4>
-            <ul className="space-y-2 text-sm text-gray-700">
-              <li><a href="/research/junk-journal-niche-analysis.md" className="text-blue-600 hover:underline" target="_blank" rel="noopener">Junk Journal Niche Analysis</a></li>
-              <li><a href="/research/reddit-insights.md" className="text-blue-600 hover:underline" target="_blank" rel="noopener">Reddit Insights Document</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      {/* Share */}
-      <div className="mt-8 flex items-center gap-4">
-        <span className="text-gray-600 font-medium">Share:</span>
-        <button className="p-2 bg-blue-100 text-blue-600 rounded-full hover:bg-blue-200 transition">
-          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
-          </svg>
-        </button>
-        <button className="p-2 bg-blue-100 text-blue-600 rounded-full hover:bg-blue-200 transition">
-          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-          </svg>
-        </button>
-        <button className="p-2 bg-blue-100 text-blue-600 rounded-full hover:bg-blue-200 transition">
-          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-          </svg>
-        </button>
-      </div>
-    </article>
+      </footer>
+    </div>
   )
 }
 
