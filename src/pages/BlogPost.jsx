@@ -17,30 +17,40 @@ function BlogPost() {
   })
   const post = posts[slug] || posts['digital-wallpaper-etsy-guide-v2']
 
-  // Fetch markdown content dynamically
+  // Load markdown content (embedded at build time)
   useEffect(() => {
     setLoading(true)
     setError(null)
     
-    const fetchContent = async () => {
+    // Import markdown dynamically - Vite will bundle these
+    const loadContent = async () => {
       try {
-        const response = await fetch(`/src/content/blog/${slug}.md`)
-        if (!response.ok) {
-          throw new Error(`Failed to load ${slug}`)
+        let module
+        switch (slug) {
+          case 'digital-wallpaper-etsy-guide-v2':
+            module = await import('../content/blog/digital-wallpaper-etsy-guide-v2.md?raw')
+            break
+          case 'openclaw-cronjobs-automation-guide':
+            module = await import('../content/blog/openclaw-cronjobs-automation-guide.md?raw')
+            break
+          case 'openclaw-setup-guide-skills-subagents-plugins':
+            module = await import('../content/blog/openclaw-setup-guide-skills-subagents-plugins.md?raw')
+            break
+          default:
+            throw new Error('Unknown slug: ' + slug)
         }
-        const text = await response.text()
-        setContent(text)
+        setContent(module.default)
       } catch (err) {
         console.error('Error loading blog post:', err)
         setError(err.message)
-        setContent('# Error\n\nCould not load blog post content.')
+        setContent('# Error\n\nCould not load blog post: ' + slug)
       } finally {
         setLoading(false)
       }
     }
 
     if (slug && slug !== 'junk-journal-niche-research-march-2026') {
-      fetchContent()
+      loadContent()
     } else {
       setContent('# Article Coming Soon\n\nThis article is being prepared and will be published shortly.')
       setLoading(false)
