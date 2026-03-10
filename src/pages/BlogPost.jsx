@@ -140,7 +140,16 @@ function BlogPost() {
                   th: ({node, ...props}) => <th className="border border-gray-300 bg-gray-100 px-4 py-2 font-semibold text-left" {...props} />,
                   td: ({node, ...props}) => <td className="border border-gray-300 px-4 py-2" {...props} />,
                   hr: ({node, ...props}) => <hr className="my-8 border-gray-300" {...props} />,
-                  a: ({node, ...props}) => <a className="text-blue-600 hover:underline font-medium" target="_blank" rel="noopener noreferrer" {...props} />,
+                  a: ({node, ...props}) => {
+                    const isAnchor = props.href && props.href.startsWith('#')
+                    return (
+                      <a 
+                        className="text-blue-600 hover:underline font-medium"
+                        {...(isAnchor ? {} : { target: '_blank', rel: 'noopener noreferrer' })}
+                        {...props} 
+                      />
+                    )
+                  },
                   strong: ({node, ...props}) => <strong className="font-bold text-gray-900" {...props} />,
                   em: ({node, ...props}) => <em className="italic text-gray-700" {...props} />,
                 }}
