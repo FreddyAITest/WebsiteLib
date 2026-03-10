@@ -29,10 +29,10 @@ function Home() {
             Read Blog Posts
           </Link>
           <Link
-            to="/scripts"
+            to="/programming-stuff"
             className="bg-indigo-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-indigo-700 transition shadow-lg hover:shadow-xl"
           >
-            Download Scripts
+            Programming & Scripts
           </Link>
           <Link
             to="/skills"
