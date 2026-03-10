@@ -36,25 +36,6 @@ function ProgrammingStuff() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
-      {/* Navigation */}
-      <nav className="bg-white/90 backdrop-blur-md shadow-md sticky top-0 z-50">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <Link to="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-lg">AI</span>
-              </div>
-              <span className="text-lg font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">AI Insights</span>
-            </Link>
-            <div className="flex space-x-1">
-              <Link to="/" className="px-3 py-2 rounded-lg font-medium text-gray-600 hover:bg-gray-100 transition">Home</Link>
-              <Link to="/blog-posts" className="px-3 py-2 rounded-lg font-medium text-gray-600 hover:bg-gray-100 transition">Blog</Link>
-              <Link to="/programming-stuff" className="px-3 py-2 rounded-lg font-medium text-blue-600 bg-blue-50">Code</Link>
-            </div>
-          </div>
-        </div>
-      </nav>
-
       {/* Main Content */}
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Header */}
@@ -186,34 +167,6 @@ function ProgrammingStuff() {
           </div>
         </div>
       </main>
-
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12 mt-20">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="grid md:grid-cols-3 gap-8">
-            <div>
-              <h3 className="text-xl font-bold mb-4">AI Insights</h3>
-              <p className="text-gray-400">Exploring the frontier of AI, programming, and intelligent automation.</p>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">Quick Links</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><Link to="/blog-posts" className="hover:text-white transition">Blog Posts</Link></li>
-                <li><Link to="/programming-stuff" className="hover:text-white transition">Programming</Link></li>
-                <li><Link to="/plugins" className="hover:text-white transition">Plugins</Link></li>
-                <li><Link to="/skills" className="hover:text-white transition">Skills</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">Connect</h4>
-              <p className="text-gray-400">Built with React, Tailwind CSS, and powered by AI insights.</p>
-            </div>
-          </div>
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>© 2026 AI Insights. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
     </div>
   )
 }
