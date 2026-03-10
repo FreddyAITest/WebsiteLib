@@ -24,6 +24,17 @@ export const blogPosts = [
     readTime: '18 min read',
     featured: true,
   },
+  {
+    id: 3,
+    slug: 'openclaw-setup-guide-skills-subagents-plugins',
+    title: 'Complete OpenClaw Setup Guide: Essential Skills, Subagents & Plugins (2026)',
+    excerpt: 'Complete OpenClaw setup walkthrough: install essential skills, configure coding & general subagents, set up must-have plugins, and avoid common pitfalls. Includes CLI commands, config examples, and verification checklist.',
+    date: 'March 10, 2026',
+    dateObj: new Date('2026-03-10'),
+    category: 'OpenClaw',
+    readTime: '22 min read',
+    featured: true,
+  },
 ]
 
 // Sort posts by date (newest first) - automatic, no manual ordering needed

@@ -4,6 +4,7 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import digitalWallpaperGuide from '../content/blog/digital-wallpaper-etsy-guide-v2.md?raw'
 import openclawCronjobsGuide from '../content/blog/openclaw-cronjobs-automation-guide.md?raw'
+import openclawSetupGuide from '../content/blog/openclaw-setup-guide-skills-subagents-plugins.md?raw'
 import { blogPosts } from '../content/blog-posts-config'
 
 function BlogPost() {
@@ -37,6 +38,8 @@ function BlogPost() {
       setContent(digitalWallpaperGuide)
     } else if (slug === 'openclaw-cronjobs-automation-guide') {
       setContent(openclawCronjobsGuide)
+    } else if (slug === 'openclaw-setup-guide-skills-subagents-plugins') {
+      setContent(openclawSetupGuide)
     } else if (slug === 'junk-journal-niche-research-march-2026') {
       // Content file not yet created - show placeholder
       setContent('# Article Coming Soon\n\nThis article is being prepared and will be published shortly.')
