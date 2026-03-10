@@ -5,13 +5,26 @@ import remarkGfm from 'remark-gfm'
 import { blogPosts } from '../content/blog-posts-config'
 
 // Dynamic import function for markdown files
+// Vite requires explicit paths for dynamic imports - list all possible files
 const importMarkdown = async (slug) => {
   try {
-    const module = await import(`../content/blog/${slug}.md?raw`)
-    return module.default
+    const markdownFiles = {
+      'digital-wallpaper-etsy-guide-v2': () => import('../content/blog/digital-wallpaper-etsy-guide-v2.md?raw'),
+      'openclaw-cronjobs-automation-guide': () => import('../content/blog/openclaw-cronjobs-automation-guide.md?raw'),
+      'openclaw-setup-guide-skills-subagents-plugins': () => import('../content/blog/openclaw-setup-guide-skills-subagents-plugins.md?raw'),
+    }
+    
+    if (markdownFiles[slug]) {
+      const module = await markdownFiles[slug]()
+      return module.default
+    } else if (slug === 'junk-journal-niche-research-march-2026') {
+      return '# Article Coming Soon\n\nThis article is being prepared and will be published shortly.'
+    } else {
+      throw new Error(`Unknown slug: ${slug}`)
+    }
   } catch (error) {
     console.error(`Failed to load markdown for ${slug}:`, error)
-    return '# Content Not Found\n\nThis article could not be loaded.'
+    return '# Content Not Found\n\nThis article could not be loaded. Please check the URL or try again later.'
   }
 }
 
