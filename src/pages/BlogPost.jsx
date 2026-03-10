@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
+import digitalWallpaperGuide from '../content/blog/digital-wallpaper-etsy-guide-v2.md?raw'
 
 function BlogPost() {
   const { slug } = useParams()
+  const [content, setContent] = useState('')
 
-  // Blog posts data
+  // Blog posts metadata
   const posts = {
     'digital-wallpaper-etsy-guide-v2': {
       id: 1,
@@ -31,6 +35,18 @@ function BlogPost() {
   }
 
   const post = posts[slug] || posts['digital-wallpaper-etsy-guide-v2']
+
+  // Load content based on slug
+  useEffect(() => {
+    if (slug === 'digital-wallpaper-etsy-guide-v2') {
+      setContent(digitalWallpaperGuide)
+    } else if (slug === 'junk-journal-niche-research-march-2026') {
+      // Content file not yet created - show placeholder
+      setContent('# Article Coming Soon\n\nThis article is being prepared and will be published shortly.')
+    } else {
+      setContent(digitalWallpaperGuide)
+    }
+  }, [slug])
 
   if (!post) {
     return (
@@ -96,70 +112,11 @@ function BlogPost() {
         </div>
       </div>
 
-      {/* Content Placeholder - Will be loaded from markdown in production */}
+      {/* Full Article Content */}
       <div className="prose prose-lg max-w-none">
-        <p className="text-gray-700 leading-relaxed mb-6">
-          <em>This article is available in full at the markdown source file. In production, content will be loaded from the CMS or markdown files.</em>
-        </p>
-        
-        <div className="bg-blue-50 border-l-4 border-blue-600 p-6 my-8">
-          <h3 className="text-xl font-bold text-blue-900 mb-3">📄 Read Full Article</h3>
-          <p className="text-blue-800 mb-3">
-            This blog post is stored as a markdown file in the content repository. The full {post.readTime} includes:
-          </p>
-          <ul className="space-y-2 text-blue-800">
-            <li>Complete research methodology breakdown</li>
-            <li>Tool-by-tool findings and analysis</li>
-            <li>Data tables with demand/competition scores</li>
-            <li>Top 3 niche picks with detailed justification</li>
-            <li>Specific product ideas and Firefly prompts</li>
-            <li>Pricing recommendations and action plan</li>
-          </ul>
-          <p className="text-blue-700 text-sm mt-3">
-            Source file: <code className="bg-blue-100 px-2 py-1 rounded">/src/content/blog/{post.slug}.md</code>
-          </p>
-        </div>
-
-        {slug === 'junk-journal-niche-research-march-2026' && (
-          <div className="bg-green-50 border-l-4 border-green-600 p-6 my-8">
-            <h3 className="text-xl font-bold text-green-900 mb-3">🎯 Quick Summary: Top 3 Niches</h3>
-            <div className="space-y-4 text-green-800">
-              <div className="bg-white p-4 rounded-lg shadow-sm">
-                <h4 className="font-bold text-green-900">#1: Grunge Academia / Deconstructed Dark Academia</h4>
-                <p className="text-sm mt-1">Demand: 8.5/10 | Competition: 4/10 | Opportunity: 9/10</p>
-                <p className="text-sm mt-2">Blends 2026 grunge trend + dark academia. Distressed textures, faded book pages, scientific diagrams. Raw artistic feel vs. pristine vintage.</p>
-              </div>
-              <div className="bg-white p-4 rounded-lg shadow-sm">
-                <h4 className="font-bold text-green-900">#2: Ethereal Liminal Spaces</h4>
-                <p className="text-sm mt-1">Demand: 7.5/10 | Competition: 3/10 | Opportunity: 9.5/10</p>
-                <p className="text-sm mt-2">Taps atmospheric photo album trend. Dreamy soft-focus scenes, muted palettes, mood-focused. Virtually untapped niche.</p>
-              </div>
-              <div className="bg-white p-4 rounded-lg shadow-sm">
-                <h4 className="font-bold text-green-900">#3: Naturalista Specimen Study</h4>
-                <p className="text-sm mt-1">Demand: 8/10 | Competition: 5/10 | Opportunity: 8.5/10</p>
-                <p className="text-sm mt-2">Cabinet of curiosities style. Pressed specimens, fungi, insects. Vintage scientific field guide aesthetic. Distinct from generic floral.</p>
-              </div>
-            </div>
-            <p className="text-green-700 text-sm mt-4">
-              <strong>Research Summary:</strong> <a href="/research/junk-journal-niche-analysis.md" className="underline hover:text-green-900" target="_blank" rel="noopener">
-                /research/junk-journal-niche-analysis.md
-              </a>
-            </p>
-          </div>
-        )}
-
-        {slug === 'digital-wallpaper-etsy-guide-v2' && (
-          <div className="bg-blue-50 border-l-4 border-blue-600 p-6 my-8">
-            <h3 className="text-xl font-bold text-blue-900 mb-3">💰 Real Income Benchmarks</h3>
-            <ul className="space-y-2 text-blue-800">
-              <li><strong>Typical part-time:</strong> $615-2,000/month (6-12 months)</li>
-              <li><strong>Successful niche shop:</strong> $2,000-5,000/month (12-18 months)</li>
-              <li><strong>Exceptional performers:</strong> $7,800+/month (18-24 months)</li>
-              <li><strong>Top 1% (Frankie Rivera):</strong> $32,000 in 6 months</li>
-            </ul>
-            <p className="text-blue-700 text-sm mt-3">Source: r/EtsySellers, r/PassiveIncome, verified case studies</p>
-          </div>
-        )}
+        <ReactMarkdown remarkPlugins={[remarkGfm]} className="prose prose-lg max-w-none">
+          {content}
+        </ReactMarkdown>
       </div>
 
       {/* Tags */}
