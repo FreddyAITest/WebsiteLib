@@ -5,12 +5,22 @@ function BlogPosts() {
   const posts = [
     {
       id: 1,
-      slug: 'digital-wallpaper-etsy-guide',
-      title: 'The Complete Guide to Designing and Selling Digital Wallpaper & Junk Journal Papers on Etsy (2026)',
-      excerpt: 'A comprehensive walkthrough of the entire process—from AI generation to first sale—with real cost breakdowns, automation strategies for programmers, and a 30-day launch plan.',
+      slug: 'digital-wallpaper-etsy-guide-v2',
+      title: 'The Complete Guide to Selling Digital Wallpaper & Junk Journal Papers on Etsy (2026)',
+      excerpt: 'A comprehensive walkthrough with real seller income data, verified policy requirements, and actual shop performance metrics. No fluff—just credible, sourced information.',
       date: 'March 9, 2026',
       category: 'Passive Income',
       readTime: '25 min read',
+      featured: true,
+    },
+    {
+      id: 2,
+      slug: 'openclaw-cronjobs-automation-guide',
+      title: 'Automate Everything: How to Schedule AI Tasks with OpenClaw Cronjobs (2026 Guide)',
+      excerpt: 'Master AI automation with OpenClaw cronjobs. Step-by-step guide to scheduling reports, monitoring, data collection, and content generation with 20+ working code examples.',
+      date: 'March 10, 2026',
+      category: 'AI Automation',
+      readTime: '18 min read',
       featured: true,
     },
   ]
