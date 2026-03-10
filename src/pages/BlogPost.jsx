@@ -113,8 +113,36 @@ function BlogPost() {
       </div>
 
       {/* Full Article Content */}
-      <div className="prose prose-lg max-w-none">
-        <ReactMarkdown remarkPlugins={[remarkGfm]} className="prose prose-lg max-w-none">
+      <div className="prose prose-lg prose-blue max-w-none">
+        <ReactMarkdown
+          remarkPlugins={[remarkGfm]}
+          components={{
+            h1: ({node, ...props}) => <h1 className="text-3xl font-bold text-gray-900 mt-12 mb-6" {...props} />,
+            h2: ({node, ...props}) => <h2 className="text-2xl font-bold text-gray-900 mt-10 mb-4" {...props} />,
+            h3: ({node, ...props}) => <h3 className="text-xl font-bold text-gray-900 mt-8 mb-3" {...props} />,
+            h4: ({node, ...props}) => <h4 className="text-lg font-semibold text-gray-900 mt-6 mb-2" {...props} />,
+            p: ({node, ...props}) => <p className="text-gray-700 leading-relaxed mb-4" {...props} />,
+            ul: ({node, ...props}) => <ul className="list-disc list-inside space-y-2 mb-4 ml-4" {...props} />,
+            ol: ({node, ...props}) => <ol className="list-decimal list-inside space-y-2 mb-4 ml-4" {...props} />,
+            li: ({node, ...props}) => <li className="text-gray-700" {...props} />,
+            blockquote: ({node, ...props}) => (
+              <blockquote className="border-l-4 border-blue-600 pl-4 py-2 my-6 bg-blue-50 italic text-gray-700" {...props} />
+            ),
+            code: ({node, inline, ...props}) => (
+              inline
+                ? <code className="bg-gray-100 px-2 py-1 rounded text-sm font-mono text-red-600" {...props} />
+                : <code className="block bg-gray-900 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto font-mono text-sm" {...props} />
+            ),
+            pre: ({node, ...props}) => <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto" {...props} />,
+            table: ({node, ...props}) => <div className="overflow-x-auto my-6"><table className="min-w-full border-collapse border border-gray-300" {...props} /></div>,
+            th: ({node, ...props}) => <th className="border border-gray-300 bg-gray-100 px-4 py-2 font-semibold text-left" {...props} />,
+            td: ({node, ...props}) => <td className="border border-gray-300 px-4 py-2" {...props} />,
+            hr: ({node, ...props}) => <hr className="my-8 border-gray-300" {...props} />,
+            a: ({node, ...props}) => <a className="text-blue-600 hover:underline font-medium" target="_blank" rel="noopener noreferrer" {...props} />,
+            strong: ({node, ...props}) => <strong className="font-bold text-gray-900" {...props} />,
+            em: ({node, ...props}) => <em className="italic text-gray-700" {...props} />,
+          }}
+        >
           {content}
         </ReactMarkdown>
       </div>
